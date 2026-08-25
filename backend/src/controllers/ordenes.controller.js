@@ -42,7 +42,7 @@ async function crear(req, res) {
     const orden = await Orden.create(
       {
         usuario_id: req.usuario.id,
-        estado: 'pagado',
+        estado: 'pendiente',
         total,
         direccion_entrega,
       },
