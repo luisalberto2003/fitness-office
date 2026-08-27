@@ -9,7 +9,13 @@ export default function Home() {
     <div>
       {/* HERO */}
       <div className="bg-brand-black text-white">
-        <img src={heroBanner} alt="Entrena en Fitness Office" className="w-full max-h-[420px] object-cover" />
+        <div className="max-w-5xl mx-auto px-4 pt-6">
+          <img
+            src={heroBanner}
+            alt="Entrena en Fitness Office"
+            className="w-full rounded-xl object-cover aspect-[1024/460]"
+          />
+        </div>
         <div className="max-w-6xl mx-auto px-4 py-12 md:py-16 text-center">
           <p className="text-brand font-semibold tracking-widest text-sm mb-3">ENTRENA · SUPÉRATE · EVOLUCIONA</p>
           <p className="text-gray-300 max-w-2xl mx-auto mb-8">
