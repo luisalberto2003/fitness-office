@@ -8,6 +8,7 @@ import Home from './pages/publico/Home';
 import Login from './pages/publico/Login';
 import Registro from './pages/publico/Registro';
 import Catalogo from './pages/publico/Catalogo';
+import Membresias from './pages/publico/Membresias';
 
 import Carrito from './pages/cliente/Carrito';
 import MisPedidos from './pages/cliente/MisPedidos';
@@ -16,7 +17,7 @@ import MiMembresia from './pages/cliente/MiMembresia';
 import AdminLayout from './pages/admin/AdminLayout';
 import DashboardAdmin from './pages/admin/DashboardAdmin';
 import Socios from './pages/admin/Socios';
-import Membresias from './pages/admin/Membresias';
+import MembresiasAdmin from './pages/admin/Membresias';
 import Pagos from './pages/admin/Pagos';
 import ProductosAdmin from './pages/admin/ProductosAdmin';
 import OrdenesAdmin from './pages/admin/OrdenesAdmin';
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/membresias" element={<Membresias />} />
 
             <Route
               path="/carrito"
@@ -68,7 +70,7 @@ export default function App() {
             >
               <Route index element={<DashboardAdmin />} />
               <Route path="socios" element={<Socios />} />
-              <Route path="membresias" element={<Membresias />} />
+              <Route path="membresias" element={<MembresiasAdmin />} />
               <Route path="pagos" element={<Pagos />} />
               <Route path="productos" element={<ProductosAdmin />} />
               <Route path="ordenes" element={<OrdenesAdmin />} />

@@ -43,9 +43,13 @@ export default function Membresias() {
     setForm({ nombre: m.nombre, descripcion: m.descripcion || '', duracion_dias: m.duracion_dias, precio: m.precio });
   }
 
-  async function desactivar(id) {
-    if (!confirm('Esta membresía dejará de ofrecerse a nuevos socios, pero se conserva en el historial de quienes ya la tuvieron. ¿Desactivar de todas formas?')) return;
-    await api.delete(`/membresias/${id}`);
+  async function eliminarODesactivar(m) {
+    const mensaje = m.tiene_historial
+      ? 'Este plan ya tiene socios asociados, así que no se puede borrar por completo: se desactivará y dejará de ofrecerse a nuevos socios, conservando el historial. ¿Continuar?'
+      : 'Este plan nunca ha sido contratado por ningún socio, así que se eliminará por completo y no se podrá deshacer. ¿Continuar?';
+    if (!confirm(mensaje)) return;
+    const { data } = await api.delete(`/membresias/${m.id}`);
+    alert(data.mensaje);
     cargar();
   }
 
@@ -91,7 +95,9 @@ export default function Membresias() {
             <p className="text-xs text-gray-400 mb-3">{m.duracion_dias} días de vigencia</p>
             <div className="flex gap-3 text-xs font-semibold">
               <button onClick={() => editar(m)} className="text-blue-600 hover:underline">Editar</button>
-              <button onClick={() => desactivar(m.id)} className="text-red-500 hover:underline">Desactivar</button>
+              <button onClick={() => eliminarODesactivar(m)} className="text-red-500 hover:underline">
+                {m.tiene_historial ? 'Desactivar' : 'Eliminar'}
+              </button>
             </div>
           </div>
         ))}

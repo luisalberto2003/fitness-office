@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { Dumbbell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCarrito } from '../context/CarritoContext';
 
@@ -15,11 +16,13 @@ export default function Navbar() {
   return (
     <nav className="bg-brand-black text-white sticky top-0 z-20 shadow-md">
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
-        <Link to="/" className="font-extrabold text-xl tracking-tight">
+        <Link to="/" className="flex items-center gap-2 font-extrabold text-xl tracking-tight">
+          <Dumbbell className="w-6 h-6 text-brand" strokeWidth={2.5} />
           FITNESS <span className="text-brand">OFFICE</span>
         </Link>
 
         <div className="flex items-center gap-5 text-sm font-medium">
+          <Link to="/membresias" className="hover:text-brand transition">Membresías</Link>
           <Link to="/catalogo" className="hover:text-brand transition">Suplementos</Link>
 
           {usuario?.rol === 'administrador' && (
