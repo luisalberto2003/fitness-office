@@ -74,7 +74,7 @@ async function seed() {
       descripcion: 'Proteína de suero de alta absorción, sabor chocolate.',
       precio: 45.0,
       stock: 20,
-      imagen_url: '',
+      imagen_url: '/productos/whey-gold-standard.jpg',
     },
     {
       categoria_id: proteinas.id,
@@ -82,7 +82,7 @@ async function seed() {
       descripcion: 'Mezcla de proteína de arveja y arroz.',
       precio: 38.5,
       stock: 15,
-      imagen_url: '',
+      imagen_url: '/productos/proteina-vegana.jpg',
     },
     {
       categoria_id: creatinas.id,
@@ -90,7 +90,7 @@ async function seed() {
       descripcion: 'Aumenta la fuerza y el rendimiento en entrenamientos de alta intensidad.',
       precio: 22.0,
       stock: 30,
-      imagen_url: '',
+      imagen_url: '/productos/creatina.jpg',
     },
     {
       categoria_id: vitaminas.id,
@@ -98,7 +98,7 @@ async function seed() {
       descripcion: 'Complejo vitamínico formulado para deportistas.',
       precio: 18.0,
       stock: 25,
-      imagen_url: '',
+      imagen_url: '/productos/multivitaminico.jpg',
     },
     {
       categoria_id: preEntreno.id,
@@ -106,7 +106,7 @@ async function seed() {
       descripcion: 'Fórmula con cafeína y beta-alanina para mayor energía.',
       precio: 28.0,
       stock: 4, // stock bajo intencional para demostrar la alerta de inventario
-      imagen_url: '',
+      imagen_url: '/productos/pre-entreno.jpg',
     },
   ]);
 

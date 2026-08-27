@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../../api/client';
 
-const vacio = { nombre: '', descripcion: '', precio: '', stock: '', categoria_id: '' };
+const vacio = { nombre: '', descripcion: '', precio: '', stock: '', categoria_id: '', imagen_url: '' };
 
 export default function ProductosAdmin() {
   const [productos, setProductos] = useState([]);
@@ -41,7 +41,7 @@ export default function ProductosAdmin() {
 
   function editar(p) {
     setEditandoId(p.id);
-    setForm({ nombre: p.nombre, descripcion: p.descripcion || '', precio: p.precio, stock: p.stock, categoria_id: p.categoria_id || '' });
+    setForm({ nombre: p.nombre, descripcion: p.descripcion || '', precio: p.precio, stock: p.stock, categoria_id: p.categoria_id || '', imagen_url: p.imagen_url || '' });
   }
 
   async function darDeBaja(id) {
@@ -59,6 +59,15 @@ export default function ProductosAdmin() {
         <Input label="Descripción" value={form.descripcion} onChange={(v) => actualizarCampo('descripcion', v)} />
         <Input label="Precio (USD)" type="number" value={form.precio} onChange={(v) => actualizarCampo('precio', v)} required />
         <Input label="Stock" type="number" value={form.stock} onChange={(v) => actualizarCampo('stock', v)} required />
+        <div className="lg:col-span-2">
+          <Input label="URL de la foto (opcional)" value={form.imagen_url} onChange={(v) => actualizarCampo('imagen_url', v)} />
+          <p className="text-[11px] text-gray-400 mt-1">Sube la foto a un servicio como imgur.com y pega aquí el enlace directo a la imagen.</p>
+        </div>
+        {form.imagen_url && (
+          <div className="flex items-end">
+            <img src={form.imagen_url} alt="Vista previa" className="h-16 w-16 object-cover rounded-md border border-gray-200" onError={(e) => (e.target.style.display = 'none')} />
+          </div>
+        )}
 
         <div className="lg:col-span-4 flex items-center gap-3">
           <button type="submit" className="bg-brand hover:bg-brand-dark transition text-white font-semibold px-5 py-2 rounded-md text-sm">

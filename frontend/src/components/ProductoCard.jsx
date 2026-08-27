@@ -11,7 +11,14 @@ const ESTILO_CATEGORIA = {
   'Pre-entrenos': { icon: Flame, bg: 'bg-orange-50', color: 'text-orange-500' },
 };
 
-function IlustracionProducto({ categoria }) {
+function IlustracionProducto({ categoria, imagenUrl, nombre }) {
+  if (imagenUrl) {
+    return (
+      <div className="h-36 bg-gray-100">
+        <img src={imagenUrl} alt={nombre} className="w-full h-full object-cover" />
+      </div>
+    );
+  }
   const estilo = ESTILO_CATEGORIA[categoria] || { icon: Package, bg: 'bg-gray-50', color: 'text-gray-400' };
   const Icono = estilo.icon;
   return (
@@ -38,7 +45,7 @@ export default function ProductoCard({ producto }) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-      <IlustracionProducto categoria={producto.categoria?.nombre} />
+      <IlustracionProducto categoria={producto.categoria?.nombre} imagenUrl={producto.imagen_url} nombre={producto.nombre} />
       <div className="p-4 flex flex-col flex-1">
         <p className="text-xs text-brand font-semibold uppercase tracking-wide mb-1">
           {producto.categoria?.nombre || 'Suplemento'}
