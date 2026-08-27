@@ -11,7 +11,7 @@ export default function Home() {
           </h1>
           <p className="text-gray-300 mb-6">
             Consulta el estado de tu membresía, revisa tus pagos y descubre nuestro catálogo de
-            suplementos nutricionales con entrega a domicilio.
+            suplementos nutricionales disponibles para retiro en el gimnasio.
           </p>
           <div className="flex gap-3">
             <Link to="/catalogo" className="bg-brand hover:bg-brand-dark transition px-5 py-2.5 rounded-md font-semibold">

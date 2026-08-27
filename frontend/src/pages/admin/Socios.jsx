@@ -65,8 +65,16 @@ export default function Socios() {
     cargarSocios();
   }
 
-  async function asignarMembresia(socioId, membresiaId) {
+  async function asignarMembresia(socioId, membresiaId, nombreSocio, nombreMembresia) {
     if (!membresiaId) return;
+    const confirmado = confirm(
+      `Vas a asignar/renovar el plan "${nombreMembresia}" para ${nombreSocio}.\n\n` +
+      `Esto crea un nuevo período de vigencia a partir de hoy (no modifica pagos anteriores). ¿Continuar?`
+    );
+    if (!confirmado) {
+      setAsignando(null);
+      return;
+    }
     await api.post(`/socios/${socioId}/membresias`, { membresia_id: membresiaId });
     setAsignando(null);
     cargarSocios();
@@ -136,11 +144,14 @@ export default function Socios() {
                       <select
                         autoFocus
                         onBlur={() => setAsignando(null)}
-                        onChange={(e) => asignarMembresia(s.id, e.target.value)}
+                        onChange={(e) => {
+                          const membresia = membresias.find((m) => String(m.id) === e.target.value);
+                          asignarMembresia(s.id, e.target.value, `${s.nombres} ${s.apellidos}`, membresia?.nombre);
+                        }}
                         className="ml-2 border border-gray-300 rounded-md px-2 py-1 text-xs"
                       >
                         <option value="">Elegir plan...</option>
-                        {membresias.map((m) => (
+                        {membresias.filter((m) => m.activo).map((m) => (
                           <option key={m.id} value={m.id}>{m.nombre} (${m.precio})</option>
                         ))}
                       </select>

@@ -28,6 +28,7 @@ export default function Navbar() {
 
           {usuario?.rol === 'cliente' && (
             <>
+              <Link to="/mi-membresia" className="hover:text-brand transition">Mi membresía</Link>
               <Link to="/mis-pedidos" className="hover:text-brand transition">Mis pedidos</Link>
               <Link to="/carrito" className="relative hover:text-brand transition">
                 Carrito

@@ -30,7 +30,7 @@ export default function OrdenesAdmin() {
               <th className="p-3">Fecha</th>
               <th className="p-3">Productos</th>
               <th className="p-3">Total</th>
-              <th className="p-3">Dirección</th>
+              <th className="p-3">Comentarios</th>
               <th className="p-3">Estado</th>
             </tr>
           </thead>

@@ -11,6 +11,7 @@ import Catalogo from './pages/publico/Catalogo';
 
 import Carrito from './pages/cliente/Carrito';
 import MisPedidos from './pages/cliente/MisPedidos';
+import MiMembresia from './pages/cliente/MiMembresia';
 
 import AdminLayout from './pages/admin/AdminLayout';
 import DashboardAdmin from './pages/admin/DashboardAdmin';
@@ -45,6 +46,14 @@ export default function App() {
               element={
                 <RutaProtegida rolRequerido="cliente">
                   <MisPedidos />
+                </RutaProtegida>
+              }
+            />
+            <Route
+              path="/mi-membresia"
+              element={
+                <RutaProtegida rolRequerido="cliente">
+                  <MiMembresia />
                 </RutaProtegida>
               }
             />

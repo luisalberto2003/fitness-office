@@ -44,10 +44,18 @@ export default function Membresias() {
   }
 
   async function desactivar(id) {
-    if (!confirm('¿Desactivar esta membresía?')) return;
+    if (!confirm('Esta membresía dejará de ofrecerse a nuevos socios, pero se conserva en el historial de quienes ya la tuvieron. ¿Desactivar de todas formas?')) return;
     await api.delete(`/membresias/${id}`);
     cargar();
   }
+
+  async function reactivar(id) {
+    await api.put(`/membresias/${id}`, { activo: true });
+    cargar();
+  }
+
+  const activas = membresias.filter((m) => m.activo);
+  const inactivas = membresias.filter((m) => !m.activo);
 
   return (
     <div>
@@ -72,20 +80,51 @@ export default function Membresias() {
         </div>
       </form>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {membresias.map((m) => (
-          <div key={m.id} className={`bg-white rounded-xl border shadow-sm p-5 ${!m.activo ? 'opacity-50' : 'border-gray-100'}`}>
+      <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Planes activos ({activas.length})</h2>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        {activas.length === 0 && <p className="text-gray-400 text-sm">No hay planes activos.</p>}
+        {activas.map((m) => (
+          <div key={m.id} className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
             <p className="font-bold">{m.nombre}</p>
             <p className="text-gray-500 text-sm mb-2">{m.descripcion}</p>
             <p className="text-2xl font-extrabold">${Number(m.precio).toFixed(2)}</p>
             <p className="text-xs text-gray-400 mb-3">{m.duracion_dias} días de vigencia</p>
             <div className="flex gap-3 text-xs font-semibold">
               <button onClick={() => editar(m)} className="text-blue-600 hover:underline">Editar</button>
-              {m.activo && <button onClick={() => desactivar(m.id)} className="text-red-500 hover:underline">Desactivar</button>}
+              <button onClick={() => desactivar(m.id)} className="text-red-500 hover:underline">Desactivar</button>
             </div>
           </div>
         ))}
       </div>
+
+      {inactivas.length > 0 && (
+        <>
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+            Planes desactivados ({inactivas.length})
+          </h2>
+          <p className="text-xs text-gray-400 mb-3">
+            Ya no se ofrecen a nuevos socios, pero se conservan porque hay historial de membresías ligado a ellos.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {inactivas.map((m) => (
+              <div key={m.id} className="bg-gray-50 rounded-xl border border-gray-200 p-5">
+                <div className="flex items-center justify-between mb-1">
+                  <p className="font-bold text-gray-500">{m.nombre}</p>
+                  <span className="text-[10px] font-semibold uppercase tracking-wide bg-gray-200 text-gray-500 px-2 py-0.5 rounded-full">
+                    Inactivo
+                  </span>
+                </div>
+                <p className="text-gray-400 text-sm mb-2">{m.descripcion}</p>
+                <p className="text-xl font-extrabold text-gray-400">${Number(m.precio).toFixed(2)}</p>
+                <p className="text-xs text-gray-400 mb-3">{m.duracion_dias} días de vigencia</p>
+                <button onClick={() => reactivar(m.id)} className="text-green-600 text-xs font-semibold hover:underline">
+                  Reactivar
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -1,5 +1,21 @@
 const { Socio, SocioMembresia, Membresia, Asistencia } = require('../models');
 
+// GET /api/socios/me  (cliente autenticado consulta su propio perfil de socio)
+async function obtenerPropio(req, res) {
+  const socio = await Socio.findOne({
+    where: { usuario_id: req.usuario.id },
+    include: [{ model: SocioMembresia, as: 'membresias', include: [Membresia] }],
+  });
+
+  if (!socio) {
+    // El usuario existe pero todavía no tiene un perfil de socio asociado
+    // (por ejemplo, se registró sin indicar su cédula).
+    return res.status(404).json({ mensaje: 'Todavía no tienes un perfil de socio registrado. Acércate al gimnasio para completar tu inscripción.' });
+  }
+
+  res.json(socio);
+}
+
 // GET /api/socios
 async function listar(req, res) {
   const { busqueda } = req.query;
@@ -98,6 +114,7 @@ async function registrarAsistencia(req, res) {
 }
 
 module.exports = {
+  obtenerPropio,
   listar,
   obtener,
   crear,

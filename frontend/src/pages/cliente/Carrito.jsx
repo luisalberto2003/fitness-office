@@ -13,10 +13,6 @@ export default function Carrito() {
 
   async function confirmarCompra() {
     setError('');
-    if (!direccion.trim()) {
-      setError('Ingresa una dirección de entrega.');
-      return;
-    }
     setEnviando(true);
     try {
       const items = carrito.items.map((i) => ({ producto_id: i.producto.id, cantidad: i.cantidad }));
@@ -86,14 +82,17 @@ export default function Carrito() {
           ))}
 
           <div className="p-4">
-            <label className="text-sm font-medium text-gray-700">Dirección de entrega</label>
+            <label className="text-sm font-medium text-gray-700">
+              Comentarios para tu pedido <span className="text-gray-400 font-normal">(opcional)</span>
+            </label>
             <input
               type="text"
               value={direccion}
               onChange={(e) => setDireccion(e.target.value)}
-              placeholder="Ej. Av. Amazonas y Naciones Unidas, Quito"
+              placeholder="Ej. Retiro después de las 6pm, o alguna indicación para el gimnasio"
               className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand"
             />
+            <p className="text-xs text-gray-400 mt-1">Los pedidos se retiran directamente en Fitness Office.</p>
           </div>
 
           {error && <p className="text-red-500 text-sm px-4">{error}</p>}

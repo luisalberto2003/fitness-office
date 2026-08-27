@@ -3,7 +3,10 @@ const router = express.Router();
 const ctrl = require('../controllers/socios.controller');
 const { verificarToken, autorizarRoles } = require('../middleware/auth');
 
-// Todas las rutas de socios son exclusivas del administrador del gimnasio.
+// El cliente autenticado puede consultar su propio perfil de socio.
+router.get('/me', verificarToken, ctrl.obtenerPropio);
+
+// El resto de rutas de socios son exclusivas del administrador del gimnasio.
 router.use(verificarToken, autorizarRoles('administrador'));
 
 router.get('/', ctrl.listar);

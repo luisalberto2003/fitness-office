@@ -23,7 +23,7 @@ export default function Catalogo() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-extrabold">Catálogo de suplementos</h1>
-          <p className="text-gray-500 text-sm">Nutrición deportiva con entrega a domicilio.</p>
+          <p className="text-gray-500 text-sm">Nutrición deportiva para socios de Fitness Office.</p>
         </div>
         <input
           type="text"

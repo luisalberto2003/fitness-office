@@ -42,6 +42,9 @@ async function crear(req, res) {
     const orden = await Orden.create(
       {
         usuario_id: req.usuario.id,
+        // Sin pasarela de pago electrónico integrada (queda como mejora futura),
+        // toda orden nace "pendiente" y el administrador la marca como pagada
+        // manualmente desde el panel, igual que con los pagos de membresías.
         estado: 'pendiente',
         total,
         direccion_entrega,
