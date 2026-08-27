@@ -1,6 +1,25 @@
 import { useCarrito } from '../context/CarritoContext';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Dumbbell, Zap, Pill, Flame, Package } from 'lucide-react';
+
+// Ilustraciones propias por categoría (sin depender de fotos de terceros con derechos de autor).
+const ESTILO_CATEGORIA = {
+  'Proteínas': { icon: Dumbbell, bg: 'bg-red-50', color: 'text-brand' },
+  'Creatinas': { icon: Zap, bg: 'bg-amber-50', color: 'text-amber-500' },
+  'Vitaminas y Minerales': { icon: Pill, bg: 'bg-emerald-50', color: 'text-emerald-500' },
+  'Pre-entrenos': { icon: Flame, bg: 'bg-orange-50', color: 'text-orange-500' },
+};
+
+function IlustracionProducto({ categoria }) {
+  const estilo = ESTILO_CATEGORIA[categoria] || { icon: Package, bg: 'bg-gray-50', color: 'text-gray-400' };
+  const Icono = estilo.icon;
+  return (
+    <div className={`h-36 ${estilo.bg} flex items-center justify-center`}>
+      <Icono className={`w-12 h-12 ${estilo.color}`} strokeWidth={1.5} />
+    </div>
+  );
+}
 
 export default function ProductoCard({ producto }) {
   const carrito = useCarrito();
@@ -19,9 +38,7 @@ export default function ProductoCard({ producto }) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
-      <div className="h-36 bg-gray-50 flex items-center justify-center text-gray-300 text-4xl font-black">
-        {producto.nombre.charAt(0)}
-      </div>
+      <IlustracionProducto categoria={producto.categoria?.nombre} />
       <div className="p-4 flex flex-col flex-1">
         <p className="text-xs text-brand font-semibold uppercase tracking-wide mb-1">
           {producto.categoria?.nombre || 'Suplemento'}
