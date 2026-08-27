@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Dumbbell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useCarrito } from '../context/CarritoContext';
+import logo from '../assets/logo.png';
 
 export default function Navbar() {
   const { usuario, logout } = useAuth();
@@ -16,9 +16,11 @@ export default function Navbar() {
   return (
     <nav className="bg-brand-black text-white sticky top-0 z-20 shadow-md">
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
-        <Link to="/" className="flex items-center gap-2 font-extrabold text-xl tracking-tight">
-          <Dumbbell className="w-6 h-6 text-brand" strokeWidth={2.5} />
-          FITNESS <span className="text-brand">OFFICE</span>
+        <Link to="/" className="flex items-center gap-2">
+          <img src={logo} alt="Fitness Office" className="h-11 w-11 object-contain" />
+          <span className="font-extrabold text-xl tracking-tight">
+            FITNESS <span className="text-brand">OFFICE</span>
+          </span>
         </Link>
 
         <div className="flex items-center gap-5 text-sm font-medium">

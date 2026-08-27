@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Dumbbell, HeartPulse, Zap, MapPin, Phone, Clock, Star } from 'lucide-react';
+import heroBanner from '../../assets/hero-banner.jpg';
 
 const WHATSAPP = 'https://api.whatsapp.com/send/?phone=593983458206&text=Hola%2C%20quiero%20recibir%20informaci%C3%B3n%20sobre%20el%20gimnasio';
 
@@ -8,11 +9,9 @@ export default function Home() {
     <div>
       {/* HERO */}
       <div className="bg-brand-black text-white">
-        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20 text-center">
+        <img src={heroBanner} alt="Entrena en Fitness Office" className="w-full max-h-[420px] object-cover" />
+        <div className="max-w-6xl mx-auto px-4 py-12 md:py-16 text-center">
           <p className="text-brand font-semibold tracking-widest text-sm mb-3">ENTRENA · SUPÉRATE · EVOLUCIONA</p>
-          <h1 className="text-3xl md:text-5xl font-extrabold leading-tight mb-5">
-            Tu cuerpo. Tu disciplina.<br />Tu mejor versión.
-          </h1>
           <p className="text-gray-300 max-w-2xl mx-auto mb-8">
             En Fitness Office encontrarás un espacio pensado para ayudarte a trabajar por tus objetivos:
             ganar fuerza, mejorar tu condición física, aumentar tu resistencia o simplemente sentirte mejor
