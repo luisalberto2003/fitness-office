@@ -15,8 +15,22 @@ const Socio = sequelize.define(
     },
     nombres: { type: DataTypes.STRING(100), allowNull: false },
     apellidos: { type: DataTypes.STRING(100), allowNull: false },
-    cedula: { type: DataTypes.STRING(20), allowNull: false, unique: true },
-    telefono: { type: DataTypes.STRING(20) },
+    cedula: {
+      type: DataTypes.STRING(10),
+      allowNull: false,
+      unique: true,
+      validate: {
+        isNumeric: { msg: 'La cédula debe contener solo números.' },
+        len: { args: [10, 10], msg: 'La cédula debe tener exactamente 10 dígitos.' },
+      },
+    },
+    telefono: {
+      type: DataTypes.STRING(10),
+      validate: {
+        isNumeric: { msg: 'El teléfono debe contener solo números.' },
+        len: { args: [7, 10], msg: 'El teléfono debe tener entre 7 y 10 dígitos.' },
+      },
+    },
     email: { type: DataTypes.STRING(150) },
     fecha_nacimiento: { type: DataTypes.DATEONLY },
     fecha_registro: {

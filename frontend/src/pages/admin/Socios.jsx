@@ -34,6 +34,16 @@ export default function Socios() {
   async function guardar(e) {
     e.preventDefault();
     setError('');
+
+    if (form.cedula && form.cedula.length !== 10) {
+      setError('La cédula debe tener exactamente 10 dígitos.');
+      return;
+    }
+    if (form.telefono && (form.telefono.length < 7 || form.telefono.length > 10)) {
+      setError('El teléfono debe tener entre 7 y 10 dígitos.');
+      return;
+    }
+
     try {
       if (editandoId) {
         await api.put(`/socios/${editandoId}`, form);
@@ -87,8 +97,21 @@ export default function Socios() {
       <form onSubmit={guardar} className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-6 grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
         <Input label="Nombres" value={form.nombres} onChange={(v) => actualizarCampo('nombres', v)} required />
         <Input label="Apellidos" value={form.apellidos} onChange={(v) => actualizarCampo('apellidos', v)} required />
-        <Input label="Cédula" value={form.cedula} onChange={(v) => actualizarCampo('cedula', v)} required />
-        <Input label="Teléfono" value={form.telefono} onChange={(v) => actualizarCampo('telefono', v)} />
+        <Input
+          label="Cédula"
+          value={form.cedula}
+          onChange={(v) => actualizarCampo('cedula', v.replace(/\D/g, '').slice(0, 10))}
+          required
+          inputMode="numeric"
+          maxLength={10}
+        />
+        <Input
+          label="Teléfono"
+          value={form.telefono}
+          onChange={(v) => actualizarCampo('telefono', v.replace(/\D/g, '').slice(0, 10))}
+          inputMode="numeric"
+          maxLength={10}
+        />
         <Input label="Email" value={form.email} onChange={(v) => actualizarCampo('email', v)} />
 
         <div className="lg:col-span-5 flex items-center gap-3">
@@ -180,7 +203,7 @@ export default function Socios() {
   );
 }
 
-function Input({ label, value, onChange, required }) {
+function Input({ label, value, onChange, required, inputMode, maxLength }) {
   return (
     <div>
       <label className="text-xs font-medium text-gray-600">{label}</label>
@@ -188,6 +211,8 @@ function Input({ label, value, onChange, required }) {
         value={value}
         required={required}
         onChange={(e) => onChange(e.target.value)}
+        inputMode={inputMode}
+        maxLength={maxLength}
         className="mt-1 w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand"
       />
     </div>

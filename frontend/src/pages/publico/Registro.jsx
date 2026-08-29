@@ -13,9 +13,32 @@ export default function Registro() {
     setForm((f) => ({ ...f, [campo]: valor }));
   }
 
+  // Solo permite dígitos, y limita la cantidad máxima de caracteres.
+  function actualizarSoloNumeros(campo, valor, maxLength) {
+    const soloNumeros = valor.replace(/\D/g, '').slice(0, maxLength);
+    actualizar(campo, soloNumeros);
+  }
+
+  function validar() {
+    if (form.cedula && form.cedula.length !== 10) {
+      return 'La cédula debe tener exactamente 10 dígitos.';
+    }
+    if (form.telefono && (form.telefono.length < 7 || form.telefono.length > 10)) {
+      return 'El teléfono debe tener entre 7 y 10 dígitos.';
+    }
+    return '';
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
+
+    const errorValidacion = validar();
+    if (errorValidacion) {
+      setError(errorValidacion);
+      return;
+    }
+
     setCargando(true);
     try {
       await registro(form);
@@ -39,8 +62,22 @@ export default function Registro() {
           <Campo label="Nombre completo" value={form.nombre} onChange={(v) => actualizar('nombre', v)} required />
           <Campo label="Correo electrónico" type="email" value={form.email} onChange={(v) => actualizar('email', v)} required />
           <Campo label="Contraseña" type="password" value={form.password} onChange={(v) => actualizar('password', v)} required />
-          <Campo label="Cédula" value={form.cedula} onChange={(v) => actualizar('cedula', v)} />
-          <Campo label="Teléfono" value={form.telefono} onChange={(v) => actualizar('telefono', v)} />
+          <Campo
+            label="Cédula"
+            value={form.cedula}
+            onChange={(v) => actualizarSoloNumeros('cedula', v, 10)}
+            inputMode="numeric"
+            maxLength={10}
+            placeholder="10 dígitos"
+          />
+          <Campo
+            label="Teléfono"
+            value={form.telefono}
+            onChange={(v) => actualizarSoloNumeros('telefono', v, 10)}
+            inputMode="numeric"
+            maxLength={10}
+            placeholder="Ej. 0983458206"
+          />
 
           <button
             type="submit"
@@ -62,7 +99,7 @@ export default function Registro() {
   );
 }
 
-function Campo({ label, type = 'text', value, onChange, required }) {
+function Campo({ label, type = 'text', value, onChange, required, inputMode, maxLength, placeholder }) {
   return (
     <div>
       <label className="text-sm font-medium text-gray-700">{label}</label>
@@ -71,6 +108,9 @@ function Campo({ label, type = 'text', value, onChange, required }) {
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        inputMode={inputMode}
+        maxLength={maxLength}
+        placeholder={placeholder}
         className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand"
       />
     </div>

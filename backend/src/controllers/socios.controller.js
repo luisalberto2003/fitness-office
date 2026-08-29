@@ -52,9 +52,17 @@ async function obtener(req, res) {
 }
 
 // POST /api/socios
+// El teléfono es opcional: si llega vacío, se guarda como null para que
+// las validaciones de formato (isNumeric/len) no se apliquen sobre "".
+function normalizar(datos) {
+  const copia = { ...datos };
+  if (copia.telefono === '') copia.telefono = null;
+  return copia;
+}
+
 async function crear(req, res) {
   try {
-    const socio = await Socio.create(req.body);
+    const socio = await Socio.create(normalizar(req.body));
     res.status(201).json(socio);
   } catch (error) {
     res.status(400).json({ mensaje: 'No se pudo crear el socio.', error: error.message });
@@ -65,8 +73,12 @@ async function crear(req, res) {
 async function actualizar(req, res) {
   const socio = await Socio.findByPk(req.params.id);
   if (!socio) return res.status(404).json({ mensaje: 'Socio no encontrado.' });
-  await socio.update(req.body);
-  res.json(socio);
+  try {
+    await socio.update(normalizar(req.body));
+    res.json(socio);
+  } catch (error) {
+    res.status(400).json({ mensaje: 'No se pudo actualizar el socio.', error: error.message });
+  }
 }
 
 // DELETE /api/socios/:id
